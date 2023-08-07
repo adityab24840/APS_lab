@@ -1,6 +1,11 @@
 ---
 title: "R Data Types and Data Structures"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type:inline
+  chunk_output_type:console
 ---
 
 **Everything in R is an object**
@@ -22,7 +27,6 @@ my_obj = 48
 # Create objects of simple data types
 my_char = 'a'
 print(my_char)
-
 my_int = 10L
 print(my_int)
 
@@ -45,33 +49,38 @@ We will look at atomic vectors, also referred simply to as vectors, first. A vec
 
 ```{r}
 # Create a vector
-# my_vec1 = c(1L, 2L, 3L)
-# my_vec2 = 1:3
-# my_vec3 = seq(from = 1, to = 3, by = 1)
-# print(my_vec1)
-# print(my_vec2)
-# print(my_vec3)
+my_vec1 = c(1L, 2L, 3L)
+my_vec2 = 1:3
+my_vec3 = seq(from = 1, to = 3, by = 1)
+print(my_vec1)
+print(my_vec2)
+print(my_vec3)
 
 # Functions on objects
-# length(my_vec1)
-# class(my_vec1)
-# class(my_vec2)
-# class(my_vec3)
-# typeof(my_vec3)
-# str(my_vec3)
+length(my_vec1)
+class(my_vec1)
+class(my_vec2)
+class(my_vec3)
+typeof(my_vec3)
+str(my_vec3)
 
 # Access elements of a vector
-# my_vec1[1]
+my_vec1[1]
 
 # Modify element of a vector
-# my_vec1[1] = 10
-# print(my_vec1)
+my_vec1[1] = 10
+print(my_vec1)
 
 # Missing data
-# my_vec4 = c(1, 2, NA, 4)
-# print(my_vec4)
-# is.na(my_vec4)
-# anyNA(my_vec4)
+my_vec4 = c(1, 2, NA, NA,5)
+print(my_vec4)
+is.na(my_vec4)
+anyNA(my_vec4) 
+#used to check if there is a NA or not, true for NA
+sum(is.na(my_vec4)) 
+#gives sum of NA
+which(is.na(my_vec4)) 
+# which tells us where the value is true(here we are using to find the NA value)
 
 # Special values
 1/0
@@ -108,7 +117,7 @@ my_list2[1] = 10
 print(my_list2)
 ```
 
-A matrix is an atomic vector with one or two dimesions.
+A matrix is an atomic vector with one or two dimensions.
 
 ```{r}
 # Create a matrix
@@ -122,15 +131,14 @@ print(my_matrix2)
 rownames(my_matrix2) = c('row1', 'row2')
 colnames(my_matrix2) = c('col1', 'col2', 'col3')
 str(my_matrix2)
-
 # Access elements of a matrix
 my_matrix2[1, 2]
 ```
 
-A data frame is a list of lists with each sublist of same length; think of it as a rectangular list. A data frame is typically used to store data that are read from text/CSV files by retaining the underlying structure such as row names, column names etc. A data frame can also be created manually.
+A data frame is a list of lists with each sub-list of same length; think of it as a rectangular list. A data frame is typically used to store data that are read from text/CSV files by retaining the underlying structure such as row names, column names etc. A data frame can also be created manually.
 
 ```{r}
-# Create a dataframe manually
+# Create a data frame manually
 ID = c('A', 'B', 'C')
 Age = c(21, 22, 20)
 Height = c(150, 160, 170)
@@ -139,6 +147,8 @@ sData = data.frame(ID, Age, Height)
 # Assign names to the rows and columns of the data frame
 rownames(sData) = c('Ajith', 'John', 'Bob')
 colnames(sData) = c('ID', 'Age', 'Height')
+
+print(sData)
 ```
 
 In-built functions on data frame
