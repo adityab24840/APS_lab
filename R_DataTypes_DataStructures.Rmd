@@ -149,6 +149,13 @@ rownames(sData) = c('Ajith', 'John', 'Bob')
 colnames(sData) = c('ID', 'Age', 'Height')
 
 print(sData)
+
+str(sData)
+
+sData[['Age']]
+sData$Age
+sData['Age']
+sData['Bob',]
 ```
 
 In-built functions on data frame
@@ -192,7 +199,7 @@ A factor is a vector that can contain only predefined values, and is used to sto
 
 ```{r}
 # Create a factor for storing a list of genders
-gender = factor(c('Male', 'Male', 'Female', 'Female'))
+gender = factor(c('Male', 'Male', 'Female', 'Female','others'))
 print(gender)
 
 # In-built functions on factors
