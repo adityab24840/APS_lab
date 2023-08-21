@@ -92,4 +92,4 @@ for (gene in genes_to_analyze) {
 ```
 
 ## Conclusion
-The analysis explores the connection between specific bat genes and the likelihood of carrying the Ebola virus.
+The analysis explores the connection between specific bat genes and the likelihood of carrying the Ebola virus. 
