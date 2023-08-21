@@ -1,0 +1,46 @@
+---
+title: "Emergency DataSet"
+output: html_document
+date: "2023-08-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+df=read.csv("emergency.csv", stringsAsFactors = TRUE,row.names = 1)
+#stringsAsFactors will convert column strings to factor, default false
+str(df)
+```
+
+```{r}
+nrow(df)
+ncol(df)
+```
+```{r}
+df$Condition=factor(df$Condition)
+contrasts(df$Condition)
+```
+
+
+```{r}
+str(df$Condition)
+```
+
+
+```{r}
+df$Insurance=as.factor(df$Insurance)
+contrasts(df$Insurance)
+```
+```{r}
+str(df$Insurance)
+```
+```{r}
+dfPatient= df=read.csv("emergency.csv", stringsAsFactors = FALSE,row.names = 1)
+categorical_cols=c('Condition','Insurance')
+
+dfPatient[,categorical_cols]=lapply(dfPatient[,categorical_cols],as.factor)
+str(data)
+```
+
