@@ -1,6 +1,8 @@
 ---
 title: "Emergency DataSet"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 date: "2023-08-21"
 ---
 
@@ -37,10 +39,30 @@ contrasts(df$Insurance)
 str(df$Insurance)
 ```
 ```{r}
+#this part is important to convert column of strings to column of vector
+
 dfPatient= df=read.csv("emergency.csv", stringsAsFactors = FALSE,row.names = 1)
+
 categorical_cols=c('Condition','Insurance')
 
 dfPatient[,categorical_cols]=lapply(dfPatient[,categorical_cols],as.factor)
-str(data)
+
+str(dfPatient)
+```
+```{r}
+levels(dfPatient$Condition)
 ```
 
+```{r}
+levels(dfPatient$Insurance)
+
+```
+```{r}
+contrasts(dfPatient$Condition)
+```
+
+```{r}
+contrasts(dfPatient$Insurance)
+```
+
+#one hot encoding 
