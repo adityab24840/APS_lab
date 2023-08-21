@@ -1,0 +1,80 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r}
+#Load the DataSet
+
+dfBat=read.csv("bats.csv")
+str(dfBat)
+```
+
+```{r}
+ncol(dfBat)
+nrow(dfBat)
+```
+```{r}
+logical_columns <- c("Gene.1", "Gene.2", "Gene.3", "Gene.4", "Gene.5", "Ebola")
+dfBat[logical_columns] <- lapply(dfBat[logical_columns], as.numeric)
+```
+
+
+```{r}
+# 1 What is the chance of a random bat carrying the Ebola virus?
+ebola_bats_count <- sum(dfBat$Ebola)
+total_bats <- nrow(dfBat)
+chance_of_ebola <- ebola_bats_count / total_bats
+cat("Chance of a random bat carrying Ebola is", chance_of_ebola)
+
+```
+
+```{r}
+# 2  For each gene, calculate the likelihood that it is expressed in a random bat.
+
+likelihood_genes = colMeans(dfBat[, c("Gene.1", "Gene.2", "Gene.3", "Gene.4", "Gene.5")])
+likelihood_df <- data.frame(Gene = c("Gene.1", "Gene.2", "Gene.3", "Gene.4", "Gene.5"),
+                             Likelihood = likelihood_genes)
+
+print(likelihood_df)
+
+```
+```{r}
+#3 Is the presence or absence of any of the genes indicative of a random bat potentially carrying the Ebola virus?
+```
+
+```{r}
+genes_to_analyze <- c("Gene.1", "Gene.2", "Gene.3", "Gene.4", "Gene.5")
+
+# Calculate the proportion of bats carrying Ebola for each gene's presence and absence
+for (gene in genes_to_analyze) {
+  presence_ebola_proportion <- mean(dfBat[dfBat[[gene]] == TRUE, "Ebola"])
+  absence_ebola_proportion <- mean(dfBat[dfBat[[gene]] == FALSE, "Ebola"])
+  
+  cat("Gene:", gene, "\n")
+  cat("Proportion of bats carrying Ebola with", gene, "present:", presence_ebola_proportion, "\n")
+  cat("Proportion of bats carrying Ebola with", gene, "absent:", absence_ebola_proportion, "\n\n")
+}
+```
+
+
+```{r}
+dfBat$Ebola_numeric = as.numeric(dfBat$Ebola)
+model = glm(Ebola_numeric ~ Gene.1 + Gene.2 + Gene.3 + Gene.4 + Gene.5,
+             data = dfBat, family = binomial)
+summary(model)
+
+```
+```{r}
+genes <- c("Gene.1", "Gene.2", "Gene.3", "Gene.4", "Gene.5")
+
+for (gene in genes) {
+  cross_tab <- table(dfBat[[gene]], dfBat$Ebola)
+  chi_result <- chisq.test(cross_tab)
+  
+  cat("Chi-squared test for", gene, "and Ebola:\n")
+  print(chi_result)
+}
+```
+
+
