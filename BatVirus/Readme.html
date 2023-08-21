@@ -11,7 +11,7 @@
 
 
 
-<title>bat.knit</title>
+<title>Readme</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -352,158 +352,92 @@ display: none;
 </div>
 
 
-<pre class="r"><code>#Load the DataSet
-
-dfBat=read.csv(&quot;bats.csv&quot;)
-str(dfBat)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    99999 obs. of  7 variables:
-##  $ Bat   : int  1 2 3 4 5 6 7 8 9 10 ...
-##  $ Gene.1: logi  FALSE TRUE TRUE FALSE FALSE TRUE ...
-##  $ Gene.2: logi  FALSE FALSE FALSE TRUE FALSE FALSE ...
-##  $ Gene.3: logi  TRUE TRUE TRUE TRUE FALSE FALSE ...
-##  $ Gene.4: logi  TRUE FALSE TRUE TRUE TRUE TRUE ...
-##  $ Gene.5: logi  TRUE FALSE TRUE TRUE FALSE FALSE ...
-##  $ Ebola : logi  TRUE FALSE FALSE TRUE FALSE FALSE ...</code></pre>
-<pre class="r"><code>ncol(dfBat)</code></pre>
-<pre><code>## [1] 7</code></pre>
-<pre class="r"><code>nrow(dfBat)</code></pre>
-<pre><code>## [1] 99999</code></pre>
-<pre class="r"><code>logical_columns = c(&quot;Gene.1&quot;, &quot;Gene.2&quot;, &quot;Gene.3&quot;, &quot;Gene.4&quot;, &quot;Gene.5&quot;, &quot;Ebola&quot;)
-dfBat[logical_columns] = lapply(dfBat[logical_columns], as.numeric)</code></pre>
-<div id="a-what-is-the-chance-of-a-random-bat-carrying-the-ebola-virus" class="section level1">
-<h1>a) What is the chance of a random bat carrying the Ebola virus?</h1>
-<pre class="r"><code>TotalEbolaBats = sum(dfBat$Ebola)
-totalBats = nrow(dfBat)
-EbolaChance = TotalEbolaBats / totalBats
-cat(&quot;Chance of a random bat carrying Ebola is&quot;, EbolaChance)</code></pre>
-<pre><code>## Chance of a random bat carrying Ebola is 0.300793</code></pre>
+<div id="bat-genes-and-ebola-analysis" class="section level1">
+<h1>Bat Genes and Ebola Analysis</h1>
+<p>Welcome to the Bat Genes and Ebola Analysis repository. This
+project/assignment aims to uncover insights into how specific bat genes
+may impact the likelihood of carrying the Ebola virus. The analysis
+involves exploring a dataset of bats and their gene expressions.</p>
+<div id="dataset" class="section level2">
+<h2>Dataset</h2>
+<p>The dataset used in this analysis is stored in the
+<code>bats.csv</code> file located in the <code>Codes/Data/</code>
+folder. This file contains information about bat genes and whether a bat
+carries the Ebola virus.</p>
 </div>
-<div id="b-for-each-gene-calculate-the-likelihood-that-it-is-expressed-in-a-random-bat." class="section level1">
-<h1>b) For each gene, calculate the likelihood that it is expressed in a
-random bat.</h1>
-<pre class="r"><code>likelihood = colMeans(dfBat[, c(&quot;Gene.1&quot;, &quot;Gene.2&quot;, &quot;Gene.3&quot;, &quot;Gene.4&quot;, &quot;Gene.5&quot;)])
-dfLikelihood = data.frame(Gene = c(&quot;Gene.1&quot;, &quot;Gene.2&quot;, &quot;Gene.3&quot;, &quot;Gene.4&quot;, &quot;Gene.5&quot;),Likelihood = likelihood)
-print(dfLikelihood)</code></pre>
-<pre><code>##          Gene Likelihood
-## Gene.1 Gene.1  0.7022770
-## Gene.2 Gene.2  0.3007630
-## Gene.3 Gene.3  0.5008950
-## Gene.4 Gene.4  0.8016180
-## Gene.5 Gene.5  0.3270533</code></pre>
+<div id="analysis-steps" class="section level2">
+<h2>Analysis Steps</h2>
+<div id="loading-and-preprocessing-the-data" class="section level3">
+<h3>1. Loading and Preprocessing the Data</h3>
+<p>Load the dataset and convert logical columns to numeric values for
+analysis.</p>
+<pre class="r"><code># Load the DataSet
+dfBat &lt;- read.csv(&quot;bats.csv&quot;)
+logical_columns &lt;- c(&quot;Gene.1&quot;, &quot;Gene.2&quot;, &quot;Gene.3&quot;, &quot;Gene.4&quot;, &quot;Gene.5&quot;, &quot;Ebola&quot;)
+dfBat[logical_columns] &lt;- lapply(dfBat[logical_columns], as.numeric)</code></pre>
 </div>
-<div id="c-is-the-presence-or-absence-of-any-of-the-genes-indicative-of-a-random-bat-potentially-carrying-the-ebola-virus" class="section level1">
-<h1>c) Is the presence or absence of any of the genes indicative of a
-random bat potentially carrying the Ebola virus?</h1>
-<div id="method-1" class="section level2">
-<h2>Method 1</h2>
-<pre class="r"><code>genes = c(&quot;Gene.1&quot;, &quot;Gene.2&quot;, &quot;Gene.3&quot;, &quot;Gene.4&quot;, &quot;Gene.5&quot;)
+<div id="calculating-the-chance-of-ebola-carriage" class="section level3">
+<h3>2. Calculating the Chance of Ebola Carriage</h3>
+<p>Calculate the chance of a random bat carrying the Ebola virus.</p>
+<pre class="r"><code>TotalEbolaBats &lt;- sum(dfBat$Ebola)
+totalBats &lt;- nrow(dfBat)
+EbolaChance &lt;- TotalEbolaBats / totalBats
+</code></pre>
+</div>
+<div id="determining-gene-expression-likelihood" class="section level3">
+<h3>3. Determining Gene Expression Likelihood</h3>
+<p>Calculate the likelihood of each gene being expressed in a random
+bat.</p>
+<pre class="r"><code>likelihood &lt;- colMeans(dfBat[, c(&quot;Gene.1&quot;, &quot;Gene.2&quot;, &quot;Gene.3&quot;, &quot;Gene.4&quot;, &quot;Gene.5&quot;)])
+gene_likelihood_df &lt;- data.frame(Gene = c(&quot;Gene.1&quot;, &quot;Gene.2&quot;, &quot;Gene.3&quot;, &quot;Gene.4&quot;, &quot;Gene.5&quot;), Likelihood = likelihood)</code></pre>
+</div>
+<div id="assessing-gene-ebola-relationship" class="section level3">
+<h3>4. Assessing Gene-Ebola Relationship</h3>
+<div id="method-1-proportion-analysis" class="section level4">
+<h4>Method 1: Proportion Analysis</h4>
+<pre class="r"><code>genes_to_analyze &lt;- c(&quot;Gene.1&quot;, &quot;Gene.2&quot;, &quot;Gene.3&quot;, &quot;Gene.4&quot;, &quot;Gene.5&quot;)
 
-# Calculate the proportion of bats carrying Ebola for each gene&#39;s presence and absence
-for (gene in genes) {
-  Ebola = mean(dfBat[dfBat[[gene]] == TRUE, &quot;Ebola&quot;])
-  NoEbola = mean(dfBat[dfBat[[gene]] == FALSE, &quot;Ebola&quot;])
+for (gene in genes_to_analyze) {
+  # Calculate proportions
+  presence_ebola_proportion &lt;- mean(dfBat[dfBat[[gene]] == TRUE, &quot;Ebola&quot;])
+  absence_ebola_proportion &lt;- mean(dfBat[dfBat[[gene]] == FALSE, &quot;Ebola&quot;])
   
+  # Print results
   cat(&quot;Gene:&quot;, gene, &quot;\n&quot;)
-  cat(&quot;Proportion of bats carrying Ebola with&quot;, gene, &quot;present:&quot;, Ebola, &quot;\n&quot;)
-  cat(&quot;Proportion of bats carrying Ebola with&quot;, gene, &quot;absent:&quot;, NoEbola)
-  cat( &quot;\n \n&quot;)
+  cat(&quot;Proportion of bats carrying Ebola with&quot;, gene, &quot;present:&quot;, presence_ebola_proportion, &quot;\n&quot;)
+  cat(&quot;Proportion of bats carrying Ebola with&quot;, gene, &quot;absent:&quot;, absence_ebola_proportion, &quot;\n\n&quot;)
 }</code></pre>
-<pre><code>## Gene: Gene.1 
-## Proportion of bats carrying Ebola with Gene.1 present: 0.3020206 
-## Proportion of bats carrying Ebola with Gene.1 absent: 0.2978974
-##  
-## Gene: Gene.2 
-## Proportion of bats carrying Ebola with Gene.2 present: 0.3022011 
-## Proportion of bats carrying Ebola with Gene.2 absent: 0.3001873
-##  
-## Gene: Gene.3 
-## Proportion of bats carrying Ebola with Gene.3 present: 0.5832019 
-## Proportion of bats carrying Ebola with Gene.3 absent: 0.01737127
-##  
-## Gene: Gene.4 
-## Proportion of bats carrying Ebola with Gene.4 present: 0.3705418 
-## Proportion of bats carrying Ebola with Gene.4 absent: 0.01895352
-##  
-## Gene: Gene.5 
-## Proportion of bats carrying Ebola with Gene.5 present: 0.8999847 
-## Proportion of bats carrying Ebola with Gene.5 absent: 0.009584807
-## </code></pre>
 </div>
-<div id="method-2-we-can-use-binomial-also" class="section level2">
-<h2>Method 2 we can use Binomial also</h2>
-<pre class="r"><code>dfBat$Ebola_numeric = as.numeric(dfBat$Ebola)
-model = glm(Ebola_numeric ~ Gene.1 + Gene.2 + Gene.3 + Gene.4 + Gene.5,
-             data = dfBat, family = binomial)
-summary(model)</code></pre>
-<pre><code>## 
-## Call:
-## glm(formula = Ebola_numeric ~ Gene.1 + Gene.2 + Gene.3 + Gene.4 + 
-##     Gene.5, family = binomial, data = dfBat)
-## 
-## Coefficients:
-##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) -4.76822    0.08298 -57.464  &lt; 2e-16 ***
-## Gene.1       0.01726    0.03655   0.472  0.63685    
-## Gene.2       0.02740    0.03651   0.750  0.45300    
-## Gene.3       0.20558    0.07542   2.726  0.00641 ** 
-## Gene.4       0.07288    0.08258   0.883  0.37746    
-## Gene.5       6.67023    0.07489  89.069  &lt; 2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 122306  on 99998  degrees of freedom
-## Residual deviance:  28537  on 99993  degrees of freedom
-## AIC: 28549
-## 
-## Number of Fisher Scoring iterations: 7</code></pre>
-</div>
-<div id="method-3-we-can-use-chi-squared-on-the-dataset-also" class="section level2">
-<h2>Method 3 we can use chi-squared on the Dataset also</h2>
-<pre class="r"><code>genes = c(&quot;Gene.1&quot;, &quot;Gene.2&quot;, &quot;Gene.3&quot;, &quot;Gene.4&quot;, &quot;Gene.5&quot;)
+<div id="method-2-binomial-model" class="section level4">
+<h4>Method 2: Binomial Model</h4>
+<pre class="r"><code># Load the necessary library
+library(dplyr)
 
-for (gene in genes) {
-  cross_tab = table(dfBat[[gene]], dfBat$Ebola)
-  chi_result = chisq.test(cross_tab)
+# Create a new column to represent Ebola as numeric
+dfBat$Ebola_numeric &lt;- as.numeric(dfBat$Ebola)
+
+# Fit a logistic regression model
+model &lt;- glm(Ebola_numeric ~ Gene.1 + Gene.2 + Gene.3 + Gene.4 + Gene.5,
+             data = dfBat, family = binomial)</code></pre>
+</div>
+<div id="method-3-chi-squared-test" class="section level4">
+<h4>Method 3: Chi-Squared Test</h4>
+<pre class="r"><code>genes_to_analyze &lt;- c(&quot;Gene.1&quot;, &quot;Gene.2&quot;, &quot;Gene.3&quot;, &quot;Gene.4&quot;, &quot;Gene.5&quot;)
+
+for (gene in genes_to_analyze) {
+  cross_tab &lt;- table(dfBat[[gene]], dfBat$Ebola)
+  chi_result &lt;- chisq.test(cross_tab)
   
   cat(&quot;Chi-squared test for&quot;, gene, &quot;and Ebola:\n&quot;)
   print(chi_result)
 }</code></pre>
-<pre><code>## Chi-squared test for Gene.1 and Ebola:
-## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  cross_tab
-## X-squared = 1.6706, df = 1, p-value = 0.1962
-## 
-## Chi-squared test for Gene.2 and Ebola:
-## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  cross_tab
-## X-squared = 0.39597, df = 1, p-value = 0.5292
-## 
-## Chi-squared test for Gene.3 and Ebola:
-## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  cross_tab
-## X-squared = 38054, df = 1, p-value &lt; 2.2e-16
-## 
-## Chi-squared test for Gene.4 and Ebola:
-## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  cross_tab
-## X-squared = 9345.1, df = 1, p-value &lt; 2.2e-16
-## 
-## Chi-squared test for Gene.5 and Ebola:
-## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  cross_tab
-## X-squared = 82960, df = 1, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>The analysis explores the connection between specific bat genes and
+the likelihood of carrying the Ebola virus.</p>
 </div>
 </div>
 
