@@ -2,6 +2,16 @@
 
 Welcome to the Bat Genes and Ebola Analysis repository. This project/assignment aims to uncover insights into how specific bat genes may impact the likelihood of carrying the Ebola virus. The analysis involves exploring a dataset of bats and their gene expressions.
 
+## Table of Contents
+
+- [Dataset](#dataset)
+- [Analysis Steps](#analysis-steps)
+  - [Loading and Preprocessing the Data](#loading-and-preprocessing-the-data)
+  - [Calculating the Chance of Ebola Carriage](#calculating-the-chance-of-ebola-carriage)
+  - [Determining Gene Expression Likelihood](#determining-gene-expression-likelihood)
+  - [Assessing Gene-Ebola Relationship](#assessing-gene-ebola-relationship)
+- [Conclusion](#conclusion)
+
 ## Dataset
 
 The dataset used in this analysis is stored in the `bats.csv` file located in the `Codes/Data/` folder. This file contains information about bat genes and whether a bat carries the Ebola virus.
