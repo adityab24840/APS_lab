@@ -1,8 +1,8 @@
 ---
 title: "Emergency DataSet"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 date: "2023-08-21"
 ---
 
@@ -64,5 +64,55 @@ contrasts(dfPatient$Condition)
 ```{r}
 contrasts(dfPatient$Insurance)
 ```
+One hot encoding is done when we used contrasts 
 
-#one hot encoding 
+```{r}
+dfPatient$Condition=='serious'
+print(sum(dfPatient$Condition=='serious'))
+```
+```{r}
+print(mean(dfPatient$Condition=='serious')*100)
+```
+```{r}
+mean(dfPatient$Condition=='good')*100
+```
+```{r}
+mean(dfPatient$Condition=='fair')*100
+
+```
+
+```{r}
+mean(dfPatient$Insurance=='insured')*100
+
+```
+```{r}
+mean(dfPatient$Insurance=='not insured')*100
+
+```
+```{r}
+mean( dfPatient$Insurance == 'insured' & dfPatient$Condition == 'serious' ) * 100
+
+```
+
+```{r}
+mean(dfPatient$Condition == 'serious' & dfPatient$Insurance == 'insured') * 100
+
+```
+```{r}
+mean(dfPatient[ dfPatient$Insurance=='insured',]$Condition=='serious')*100
+
+```
+
+```{r}
+mean(dfPatient[dfPatient$Condition=='serious',]$Insurance=='insured')*100
+```
+```{r}
+mean(dfPatient$Condition == 'serious' & dfPatient$Insurance == 'insured') * 100/mean(dfPatient$Insurance='insured')
+```
+```{r}
+mean(dfPatient$Condition == 'serious' & dfPatient$Insurance == 'insured') * 100/mean(dfPatient$Condition=='serious')
+```
+```{r}
+mean(dfPatient$Insurance=='insured')*100
+```
+
