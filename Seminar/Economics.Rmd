@@ -1,0 +1,74 @@
+---
+title: "Economics"
+author: "Aditya N Bhatt"
+date: "2023-09-03"
+output: html_document
+---
+```{r}
+library(ggplot2)
+ head(economics)
+
+  head(economics_long)
+```
+
+
+```{r}
+#create a ggplot area and add specific geoms
+ggplot(data, aes(x,y,color,group)) + geom_point()
+```
+
+
+```{r}
+#Line graph with economics_long
+  #x = date variable
+  #y = value to be graphed
+  #group = variable label since data is in long form
+ggplot(economics_long, aes(x=date, y=value01, color=variable, group=variable)) + geom_line()
+```
+
+
+```{r}
+library(DT)
+#create interactive table
+datatable(economics)
+```
+
+
+```{r}
+datatable(economics, options = list(pageLength = 10))
+```
+
+
+```{r}
+library(dygraphs)
+
+library(xts)
+dygraph(data, main = NULL, xlab = NULL, ylab = NULL,
+  periodicity = NULL,
+  group = NULL, width = NULL, height = NULL)
+```
+
+
+```{r}
+#convert string date to date format
+  date_me <- as.Date(economics$date, format='%Y-%m-%d')
+
+#combine with variable of interest: PCE
+  value_me <- data.frame(date_me, economics$pce)
+
+#convert data frame to xts format
+  plot_me <- xts(value_me, order.by=value_me[,1])
+```
+
+
+```{r}
+dygraph(plot_me)
+```
+
+
+
+```{r}
+dygraph(plot_me) %>% dyRangeSelector()
+
+```
+

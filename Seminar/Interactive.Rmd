@@ -1,0 +1,87 @@
+---
+title: "Highchart Interactive Advanced Graphics in R"
+author: "Aditya N Bhatt"
+date: "2023-09-03"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(highcharter) 
+options(highcharter.theme = hc_theme_smpl(tooltip = list(valueDecimals = 2)))
+
+```
+
+Network analysis
+```{r}
+library(igraph)
+N <- 40
+
+net <- sample_gnp(N, p = 2 / N)
+wc <- cluster_walktrap(net)
+
+V(net)$label <- seq(N)
+V(net)$name <- paste("I'm #", seq(N))
+V(net)$page_rank <- round(page.rank(net)$vector, 2)
+V(net)$betweenness <- round(betweenness(net), 2)
+V(net)$degree <- degree(net)
+V(net)$size <- V(net)$degree
+V(net)$comm <- membership(wc)
+V(net)$color <- colorize(membership(wc))
+
+hc <- hchart(net, layout = layout_with_fr)
+
+```
+
+```{r}
+hc
+```
+Survival models
+Lung cancer
+```{r}
+library(survival)
+
+data(lung)
+lung <- mutate(lung, sex = ifelse(sex == 1, "Male", "Female"))
+fit <- survfit(Surv(time, status) ~ sex, data = lung) 
+
+hc <- hchart(fit, ranges = TRUE)
+```
+
+```{r}
+hc
+```
+Principal component analysis
+Crime Analysis
+```{r}
+hc <- hchart(princomp(USArrests, cor = TRUE))
+```
+
+```{r}
+hc
+```
+Distance matrix
+```{r}
+mtcars2 <- mtcars[1:20, ]
+x <- dist(mtcars2)
+hc <- hchart(x)
+```
+
+```{r}
+hc
+```
+Correlation matrix
+```{r}
+hc <- hchart(cor(mtcars))
+```
+
+```{r}
+hc
+```
+
