@@ -1,0 +1,209 @@
+---
+title: "Discrete Random Variables"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: console
+---
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+---
+
+**Scenario**: A salesman has scheduled two appointments to sell software, one in the morning and another one in the afternoon. There are two software editions available: the base edition costing Rs. 500 and the premium edition costing Rs. 1000. His morning appointments typically lead to a sale with a 30% chance while the afternoon ones typically lead to a sale with a 60% chance independent of what happened in the morning. If the morning appointment ends up in sale, the salesman has a 70% chance of selling the premium edition and if the afternoon appointment ends up in a sale, he is equally likely to sell either of the editions. Let X be the random variable representing the total Rupee value of sales. What are the different values that X can take? Calculate the probability that X takes the value 5000?
+
+---
+
+
+```{r}
+# Sampling space for appointment success (0 corresponds to no sale, 1 corresponds to a sale)
+s_appointment = 
+
+# Appointment success and failure probabilities
+p_morning =  # Success probability of sales in morning
+p_afternoon =  # Success probability of sales in afternoon
+p_appointment = matrix(nrow  = ?, ncol = ?, c(1-p_morning, , ,), byrow = TRUE)
+
+# Sampling space for software type
+s_software = ?
+
+# Software type probabilities
+p_software = ?
+
+# Function that simulates one trial of the random experiment which is
+# what the salesman earns on a random day
+salesResult = function(){
+  result = numeric(2)
+  # Simulate whether sales happen in morning and afternoon appointments
+  for (j in c(1:2)){
+    result[j] = sample(?)
+  }
+  earnings = 
+  return(?)
+}
+
+# Number of simulations
+nsimulations = 1e5
+simulatedData = replicate(?, ?)
+```
+
+---
+
+**Discrete random variable**: Let $X$  represent thetotal earnings from one day whic is random; that is, $X$ is a discrete random variable which can take the values $0, 500, 1000, 1500, 2000.$ The associated probabilities can be calculated as:
+
+$\begin{align*}P(X = 0)  &= 0.28,\\ P(X = 500) &= 0.31,\\ P(X = 1000) &= 0.275,\\ P(X = 1500) &= 0.095,\\ P(X = 2000) &= 0.04.\end{align*}$
+
+---
+
+**Probability Mass Function (PMF)** of the random variable $X$ is denoted as $P_X(x),$ where $x$ represents the possible values that the random variable $X$ can take:
+
+$\begin{align*}{\color{red}{P_X}}(0) &= P(X = 0)  = 0.28,\\ {\color{red}{P_X}}(500) &=P(X = 500) = 0.31,\\ {\color{red}{P_X}}(1000) &=P(X = 1000) = 0.275,\\ {\color{red}{P_X}}(1500) &=P(X = 1500) = 0.095,\\ {\color{red}{P_X}}(2000) &=P(X = 2000) = 0.04.\end{align*}$
+
+---
+
+```{r}
+# Convert simulatedData into a dataframe
+dfSales = as.data.frame(?)
+
+# Add names to the columns
+colnames(dfSales) = c('Earning', 'Frequency')
+
+# Add a new column with proportion (probability) values
+dfSales['Probability'] = ?
+
+#head(dfSales, 5)
+
+p = ?
+p
+```
+
+What is the salesman's expected earnings? What does it even mean to say "expected earning?" It is a single number denoted as $E[X]$ and referred to as the *expected value of* $X$ which can be calculated as follows:
+
+
+---
+
+
+
+*   *From a simulation perspective*, it is simply an average of all the simulated earnings:
+$\begin{align*}E[X] &\approx 0 \times\underbrace{\frac{\text{No. of times 0 appeared}}{\text{nsimulations}}}_{\text{approximation to }P_X(0)}+500 \times\underbrace{\frac{\text{No. of times 500 appeared}}{\text{nsimulations}}}_{\text{approximation to }P_X(500)}+1000 \times\underbrace{\frac{\text{No. of times 1000 appeared}}{\text{nsimulations}}}_{\text{approximation to }P_X(1000)}+1500 \times\underbrace{\frac{\text{No. of times 1500 appeared}}{\text{nsimulations}}}_{\text{approximation to }P_X(1500)}+2000 \times\underbrace{\frac{\text{No. of times 2000 appeared}}{\text{nsimulations}}}_{\text{approximation to }P_X(2000)}.\end{align*}$
+
+
+---
+
+
+*   *From a theoretical perspective*, s it is defined as the weighted sum of the possible values $X$ can take with the corresponding probabilities:
+
+$\begin{align*} E[X] &= \sum_xxP_X(x),\ \text{where }x = 0, 500, 1000, 1500, 2000\\\Rightarrow E[X] &= 0\times P_X(0)+500\times P_X(500)+1000\times P_X(1000)+1500\times P_X(1500)+2000\times P_X(2000).\end{align*}$
+
+
+
+---
+
+So, we see that the expected value of $X$ is approximately the long-term average of the simulated (or realized) values of $X.$
+
+```{r}
+# Expected earnings using simulated values
+mean(simulatedData) # long term average of the realizations of X
+
+# Expected earnings using the theoretical definition
+x = c(0, 500, 1000, 1500, 2000)
+p = c(0.28, 0.27, 0.315, 0.09, 0.045)
+sum(x * p)
+```
+
+How much could the salesman's earnings vary from the expected value of the earning calculated in the previous cell?
+
+
+---
+
+
+To answer this question, let's first look at the quantity $X-E[X] = X-675.$ Note that:
+
+
+*   this is also a random variable with the possible values $0-675, 500-675, 1000-675, 1500-675, 2000-675$;
+*   it can be thought of as the random variable that captures the deviation of $X$ from its expected value;
+*  the associated probabilities are still the same as:
+\begin{array}{c|c|c}
+\hline
+\color{blue}X&\color{blue}{X}-\color{cyan}{E[X]} = \color{blue}{X}-\color{cyan}{675}&\color{magenta}{\text{Probability}}\\
+\hline
+0 & -675 & 0.28\\
+500 & -175 & 0.27\\
+1000 & 325 & 0.315\\
+1500 & 825 & 0.09\\
+2000 & 1325 & 0.045
+\end{array}
+---
+Now, consider the quanityt $(X-E[X])^2 = (X-675)^2.$ Note that:
+
+
+*   this is also a random variable with the possible values $(0-675)^2, (500-675)^2, (1000-675)^2, (1500-675)^2, (2000-675)^2$;
+*   it can be thought of as the random variable that captures the squared deviation of $X$ from its expected value;
+*  the associated probabilities are still the same as:
+\begin{array}{c|c|c}
+\hline
+\color{blue}X&(\color{blue}{X}-\color{cyan}{E[X]})^2 = (\color{blue}{X}-\color{cyan}{675})^2&\color{magenta}{\text{Probability}}\\
+\hline
+0 & (-675)^2 & 0.28\\
+500 & (-175)^2 & 0.27\\
+1000 & (325)^2 & 0.315\\
+1500 & (825)^2& 0.09\\
+2000 & (1325)^2 & 0.045
+\end{array}
+
+---
+
+$\color{green}{Variance}$ of the random variable $X,$ denoted as $\text{var}[X],$ is the expected squared deviation of $X$ from its expected value. In simple terms, variance of $X$ is the expected value of the random variable $(X-E[X])^2.$
+
+$\begin{align*}\text{Var}[X] &= E[\underbrace{(X-E[X])^2}_{\text{squared deviation random variable}}]\\&=
+\sum_x (x-E[X])^2\times P_X(x)\\& = (0-675)^2\times P_X(0)+(500-675)^2\times P_X(500)+(1000-675)^2\times P_X(1000)+(1500-675)^2\times P_X(1500)+(2000-675)^2\times P_X(2000)\\&=(0-675)^2\times 0.28+(500-675)^2\times 0.27+(1000-675)^2\times 0.315+(1500-675)^2\times 0.09+(2000-675)^2\times 0.045.\end{align*}$
+
+---
+
+$\color{green}{Standard\ deviation}$ of the random variable $X,$ denoted as $\text{SD}[X],$ is defined as the square root of its variance:
+
+$\begin{align*}\text{SD}[X] &= \sqrt{\text{Var}[X]} = \sqrt{E\left[(X-E[X])^2\right]}\\&=\sqrt{(0-675)^2\times 0.28+(500-675)^2\times 0.27+(1000-675)^2\times 0.315+(1500-675)^2\times 0.09+(2000-675)^2\times 0.045}.\end{align*}$
+
+```{r}
+# Variance of the earnings using simulated values
+# long term average of this random variable (X-E[X])^2
+#simulatedData - mean(simulatedData) # simulated deviations
+#(simulatedData - mean(simulatedData))^2 # simulated squared deviations
+mean(simulatedData)
+mean((simulatedData - mean(simulatedData))^2) # variance calculated using simulation
+
+# Standard deviation of the earnings using simulated values
+sqrt(mean((simulatedData - mean(simulatedData))^2))
+
+print(' ')
+
+# Expected value using the theoretical definition
+sum(x*p)
+
+# Variance of the earnings using the thoretical definition
+x = c(0, 500, 1000, 1500, 2000)
+p = c(0.28, 0.27, 0.315, 0.09, 0.045)
+sum((x - sum(x*p))^2 * p)
+
+# Standard deviation of the earnings using the theoretical definition
+sqrt(sum((x - sum(x*p))^2 * p))
+```
+
+```{r}
+x = c(0, 500, 1000, 1500, 2000)
+p = c(0.28, 0.27, 0.315, 0.09, 0.045)
+
+# Deviations from the expected value
+x - sum(x*p)
+
+# Squared deviations from the expected value
+(x - sum(x*p))^2
+
+# Expected value of the squared deviations from the expected value
+sum((x - sum(x*p))^2 * p)
+```
+
