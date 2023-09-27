@@ -14,7 +14,7 @@ library(dplyr)
 
 ---
 
-**Scenario**: A salesman has scheduled two appointments to sell software, one in the morning and another one in the afternoon. There are two software editions available: the base edition costing Rs. 500 and the premium edition costing Rs. 1000. His morning appointments typically lead to a sale with a 30% chance while the afternoon ones typically lead to a sale with a 60% chance independent of what happened in the morning. If the morning appointment ends up in sale, the salesman has a 70% chance of selling the premium edition and if the afternoon appointment ends up in a sale, he is equally likely to sell either of the editions. Let X be the random variable representing the total Rupee value of sales. What are the different values that X can take? Calculate the probability that X takes the value 5000?
+**Scenario**: A salesman has scheduled two appointments to sell software, one in the morning and another one in the afternoon. There are two software editions available: the base edition costing Rs. 500 and the premium edition costing Rs. 1000. His morning appointments typically lead to a sale with a 30% chance while the afternoon ones typically lead to a sale with a 60% chance independent of what happened in the morning. If the morning appointment ends up in sale, the salesman has a 70% chance of selling the premium edition and if the afternoon appointment ends up in a sale, he is equally likely to sell either of the editions. Let X be the random variable representing the total Rupee value of sales. What are the different values that X can take? Calculate the probability that X takes the value 5000? 
 
 ---
 
