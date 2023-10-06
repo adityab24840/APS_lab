@@ -1,0 +1,188 @@
+---
+title: "Diabetics"
+author: "Aditya N Bhatt"
+date: "2023-09-06"
+output: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(grid)
+diabetes = read.csv("diabetes.csv")
+```
+
+# Exploratory Data Analysis on Diabetes Data
+
+```{r}
+head(diabetes)
+```
+```{r}
+summary(diabetes)
+```
+```{r}
+str(diabetes)
+```
+```{r}
+colnames(diabetes)
+```
+
+```{r}
+min_glucose = min(diabetes$Glucose)
+print(paste("Minimum Glucose Value :",min_glucose))
+```
+```{r}
+max_glucose = max(diabetes$Glucose)
+print(paste("Maximum Glucose Value :",max_glucose))
+```
+```{r}
+range_Glucose = range(diabetes$Glucose)
+```
+
+
+```{r}
+print(paste("Minimum Glucose Value :",range_Glucose[1]))
+```
+
+
+```{r}
+print(paste("Maximum Glucose Value :",range_Glucose[2]))
+```
+```{r}
+Mean_Glucose = mean(diabetes$Glucose)
+print(paste("Mean of Glucose :",Mean_Glucose))
+```
+
+```{r}
+Median_Glucose = median(diabetes$Glucose)
+print(paste("Mean of Glucose :",Mean_Glucose))
+```
+# first quartile
+
+```{r}
+q1 = quantile(diabetes$Glucose,0.25) 
+print(paste("First Quartile :",q1))
+```
+ # third quartile
+ 
+```{r}
+q3 = quantile(diabetes$Glucose,0.75)
+print(paste("Third Quartile :",q3))
+```
+```{r}
+IQR_Glucose = IQR(diabetes$Glucose)
+print(paste("Interquartile range for Glucose :",IQR_Glucose))
+```
+
+```{r}
+sd_Glucose = sd(diabetes$Glucose)
+print(paste("Standard Deviation for Glucose Column :",sd_Glucose))
+```
+```{r}
+var_Glucose = var(diabetes$Glucose)
+print(paste("Variance for Glucose Column :",var_Glucose))
+```
+```{r}
+p1 = ggplot(diabetes, aes(x=Pregnancies)) + ggtitle("Number of times pregnant") +
+  geom_histogram(aes(y = 100*(..count..)/sum(..count..)), binwidth = 1, colour="black", fill="blue") + ylab("Percentage")
+p1
+```
+
+
+```{r}
+p2 = ggplot(diabetes, aes(x=Glucose)) + ggtitle("Glucose") +
+  geom_histogram(aes(y = 100*(..count..)/sum(..count..)), binwidth = 5, colour="black", fill="orange") + ylab("Percentage")
+p2
+```
+
+
+```{r}
+p3 = ggplot(diabetes, aes(x=BloodPressure)) + ggtitle("Blood Pressure") +
+  geom_histogram(aes(y = 100*(..count..)/sum(..count..)), binwidth = 2, colour="black", fill="green") + ylab("Percentage")
+p3
+```
+
+
+```{r}
+p4 = ggplot(diabetes, aes(x=SkinThickness)) + ggtitle("Skin Thickness") +
+  geom_histogram(aes(y = 100*(..count..)/sum(..count..)), binwidth = 2, colour="black", fill="pink") + ylab("Percentage")
+p4
+```
+
+
+```{r}
+p5 = ggplot(diabetes, aes(x=Insulin)) + ggtitle("Insulin") +
+  geom_histogram(aes(y = 100*(..count..)/sum(..count..)), binwidth = 20, colour="black", fill="red") + ylab("Percentage")
+p5
+```
+
+
+```{r}
+p6 = ggplot(diabetes, aes(x=BMI)) + ggtitle("Body Mass Index") +
+  geom_histogram(aes(y = 100*(..count..)/sum(..count..)), binwidth = 1, colour="black", fill="yellow") + ylab("Percentage")
+p6
+```
+
+
+```{r}
+p7 = ggplot(diabetes, aes(x=DiabetesPedigreeFunction)) + ggtitle("Diabetes Pedigree Function") +
+  geom_histogram(aes(y = 100*(..count..)/sum(..count..)), colour="black", fill="purple") + ylab("Percentage")
+p7
+```
+
+
+```{r}
+p8 = ggplot(diabetes, aes(x=Age)) + ggtitle("Age") +
+  geom_histogram(aes(y = 100*(..count..)/sum(..count..)), binwidth=1, colour="black", fill="lightblue") + ylab("Percentage")
+p8
+```
+
+# Predicting Diabetes
+
+```{r}
+attach(diabetes)
+boxplot(Pregnancies~Outcome, main="No. of Pregnancies vs. Diabetes", 
+        xlab="Outcome", ylab="Pregnancies",col="red")
+```
+
+
+```{r}
+boxplot(Glucose~Outcome, main="Glucose vs. Diabetes", 
+        xlab="Outcome", ylab="Glucose",col="pink")
+```
+
+
+```{r}
+boxplot(BloodPressure~Outcome, main="Blood Pressure vs. Diabetes", 
+        xlab="Outcome", ylab="Blood Pressure",col="green")
+```
+
+
+```{r}
+boxplot(SkinThickness~Outcome, main="Skin Thickness vs. Diabetes", 
+        xlab="Outcome", ylab="Skin Thickness",col="orange")
+```
+
+
+```{r}
+boxplot(Insulin~Outcome, main="Insulin vs. Diabetes", 
+        xlab="Outcome", ylab="Insulin",col="yellow")
+```
+
+
+```{r}
+boxplot(BMI~Outcome, main="BMI vs. Diabetes", 
+        xlab="Outcome", ylab="BMI",col="purple")
+```
+
+
+```{r}
+boxplot(DiabetesPedigreeFunction~Outcome, main="Diabetes Pedigree Function vs. Diabetes", xlab="Outcome", ylab="DiabetesPedigreeFunction",col="lightgreen")
+```
+
+
+```{r}
+boxplot(Age~Outcome, main="Age vs. Diabetes", 
+        xlab="Outcome", ylab="Age",col="lightblue")
+```
+

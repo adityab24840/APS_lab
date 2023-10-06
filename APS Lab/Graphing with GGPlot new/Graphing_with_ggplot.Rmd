@@ -1,0 +1,232 @@
+---
+title: "Graphing with ggplot"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: console
+---
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+# Load the mpg dataset
+data('mpg')
+mpgData = mpg
+
+# Print the first five rows (or samples) in the data frame
+head(mpgData, 5)
+str(mpgData)
+```
+
+```{r}
+foodData=read.csv('food-texture.csv', header = TRUE, row.names = 1)#,stringsAsFactors = TRUE)
+#stringasfactor converts string into factor
+#header-- first row has names of column, row.names=1, since data is from first row
+str(foodData)
+head(foodData,5)
+```
+
+```{r}
+#add another column to DF called taste
+
+#foodData['Taste']= sample(c('poor','fair','good','very good'),replace=TRUE,nrow(foodData),p=c(0.25,.25,.25,.25))
+#head(foodData)
+#write.csv(foodData,'food-texture.csv') # this is used to write the new column taste into the csv
+
+```
+
+```{r}
+continuous_cols = c('Oil','Density','Fracture','Hardness')
+categorical_cols=c('Crispy','Taste')
+
+```
+
+```{r}
+#convert categorical col to factors using LApply function
+foodData[categorical_cols] = lapply(foodData[categorical_cols], factor)
+str(foodData)
+```
+
+```{r}
+#continuous to continuous == scatter plot
+#continuous to categorical == box plot
+#continuous == histogram
+#categorical == bar plot
+
+#this is continuous to continuous plot
+p=ggplot(data = foodData) + geom_point(aes(x=Oil,y=Density,color=Crispy))
+p
+```
+
+```{r}
+#this is continuous to categorical plot
+
+p1=ggplot(data = foodData) + geom_boxplot(aes(x=Crispy,y=Density))
+p1
+```
+
+```{r}
+foodData[foodData['Crispy']==8,]$Density
+```
+
+```{r}
+#density corresponding to crispy=10
+density10 = foodData[foodData['Crispy']==10,]$Density
+#this is mean squared deviation from the average, this is called variance
+mean((density10-mean(density10))^2)
+#take the root and we will get the standard deviation
+sqrt((mean((density10-mean(density10))^2)))
+
+#alt method ti find variance n SD
+var(density10)
+sd(density10)
+```
+
+```{r}
+median(density10)
+mean(density10)
+mean(density10<= median(density10))
+```
+
+```{r}
+quantile(density10,0.25)
+quantile(density10,0.50)
+quantile(density10,0.75)
+IQR=quantile(density10,0.75)-quantile(density10,0.25)
+IQR
+```
+
+```{r}
+density13 = foodData[foodData['Crispy']==13,]$Density
+var(density13)
+sd(density13)
+median(density13)
+mean(density13)
+quantile(density13,0.25)
+quantile(density13,0.50)
+quantile(density13,0.75)
+IQR=quantile(density13,0.75)-quantile(density13,0.25)
+IQR
+```
+
+```{r}
+#continous data using histogram
+p=ggplot(data = foodData) + geom_histogram(aes(x=Density),binwidth = 100, color='Blue')
+p
+```
+
+```{r}
+#histogram for crispy=13
+p13=ggplot(data = foodData[foodData$Crispy==13,]) + geom_histogram(aes(x=Density),binwidth = 100, color='Blue')
+p13
+
+```
+
+```{r}
+#categorical value use bar plot
+p=ggplot(data = foodData) + geom_bar(aes(x=Density), color='Blue')
+p
+```
+
+
+```{r}
+p=ggplot(data = foodData) + geom_point(aes(x=Oil,y=Density))
+p
+```
+
+
+```{r}
+# Initiate the ggplot() function binding to the car data frame
+ggplot(data = mpgData)
+
+# Create a plot object
+p1 = ggplot(data = mpgData)
+
+# Use the aes() function to specify the aesthetic mapping, that is, which variables
+# should be plotted
+p1 = ggplot(data = mpgData, aes(x = disp, y = hwy))
+
+# Use the geom_ type functions to add geometric elements
+p1 = ggplot(data = mpgData, aes(x = displ, y = hwy)) +
+  geom_point()
+
+# Add labels and title
+p1 = p1 + labs(x = 'Displacement (litres)', y = 'Mileage (MPG)', title = 'Mileage vs. Displacement')
+p1
+```
+
+
+```{r}
+# Map aesthetics to variables
+
+# Map the color aesthetic to the class variable
+p2 = ggplot(data = mpgData) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+p2
+```
+
+```{r}
+# Map aesthetics to variables
+
+# Map the size (or alpha or shape) aesthetic to the class variable
+p3 = ggplot(data = mpgData) +
+  geom_point(aes(x = displ, y = hwy, color = class, shape = drv)) + labs(x = 'Displacement (litres)', y = 'Mileage (MPG)', title = 'Mileage vs. Displacement')
+p3
+```
+
+```{r}
+# Set aesthetic manually
+
+# Mark the points blue in color, square in shape, and fixed size
+p4 = ggplot(data = mpgData) +
+  geom_point(aes(x = displ, y = hwy), color = 'red', size = 1) + labs(x = 'Displacement (litres)', y = 'Mileage (MPG)', title = 'Mileage vs. Displacement')
+p4
+```
+
+```{r}
+# How do we relate a continuous and a categorical feature?
+p5 = ggplot(data = mpgData) + 
+  geom_boxplot(aes(x = class, y = hwy)) + labs(x = 'Vehicle Class', y = 'Mileage (MPG)', title = 'Mileage vs. Vehicle Class')
+p5
+```
+
+
+```{r}
+# Add additional variables using facets
+
+# Plot mileage w.r.t. each class individually
+ggplot(data = mpgData) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(, nrow = 2)
+```
+
+```{r}
+# Plot mileage w.r.t drive train and number of cylinders
+ggplot(data = mpgData) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid()
+```
+
+```{r}
+# A quick exercise on facet plotting with filtering of samples
+# Investigate the number of levels in the cyl feature
+factor()
+
+# How many cars of each cyl type are there?
+mpgData %>% 
+
+# Filter samples with 3 and 5 cylinder cars (which are very rare)
+# mpgData = mpgData %>% filter(!(? %in% c(?, ?)))
+# 
+# head(mpgData, 5)
+# 
+# # Map the color aesthetic to the cyl variable
+# p5 = ggplot(data = mpgData) +
+#   geom_point(mapping = aes(x = displ, y = hwy))
+# p5
+```
+
+
