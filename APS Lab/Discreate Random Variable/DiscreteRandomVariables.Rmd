@@ -240,3 +240,72 @@ x - sum(x*p)
 sum((x - sum(x*p))^2 * p)
 ```
 
+
+
+
+```{r}
+nsimulation = 100
+simulatedData = rnorm(nsimulation,mean = 74, sd = 6)
+simulatedData
+```
+
+
+[03:14 pm] MUPPIREDDY MITHILESH REDDY               - 231057009 - MSISMPL
+
+```{r}
+
+nsimulations = 100
+
+simulatedData = rnorm(nsimulations, mean = 74, sd =6)
+
+print(simulatedData)
+
+avg = mean(simulatedData)
+
+mean((simulatedData-mean(simulatedData))^2)
+
+sd = sqrt(mean((simulatedData-mean(simulatedData))^2))
+
+```
+
+ 
+
+```{r}
+
+df = data.frame(simulatedData)
+
+df
+
+ggplot(data = df, aes(x=1:100, y=simulatedData)) + geom_point(color='yellow') + geom_line(aes(y = avg), color = 'blue') + geom_line(aes(y = avg+sd), color = 'black', linetype = 'dashed') + geom_line(aes(y = avg-sd), color = 'orange', linetype = 'dashed') + labs(x = 'Patient #', y = 'Heart Rate(BPM)', title = 'Patient HeartRate')
+
+```
+
+```{r}
+mean(simulatedData)
+```
+
+```{r}
+var(simulatedData)
+```
+
+
+```{r}
+mean(simulatedData) - mean(simulatedData)^2
+```
+
+
+```{r}
+sd(simulatedData)
+```
+
+
+```{r}
+
+sqrt(mean((simulatedData - mean(simulatedData))^2))
+```
+
+```{r}
+mean(abs(simulatedData - mean(simulatedData)) <= sd(simulatedData))
+```
+
+
