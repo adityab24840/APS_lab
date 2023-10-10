@@ -141,7 +141,7 @@ So, we see that the expected value of $X$ is approximately the long-term average
 ```{r}
 # Expected earnings using simulated values
 mean(simulatedData) # long term average of the realizations of X
-
+    
 # Expected earnings using the theoretical definition
 x = c(0, 500, 1000, 1500, 2000)
 p = c(0.28, 0.27, 0.315, 0.09, 0.045)
