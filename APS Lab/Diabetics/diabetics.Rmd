@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
 library(grid)
-diabetes = read.csv("diabetes.csv")
+diabetes = read.csv("D:/MSIS/Applied Probability & Statistics (APS)/APS Lab/Diabetics/diabetes.csv")
 ```
 
 # Exploratory Data Analysis on Diabetes Data
@@ -37,6 +37,7 @@ print(paste("Maximum Glucose Value :",max_glucose))
 ```
 ```{r}
 range_Glucose = range(diabetes$Glucose)
+range_Glucose
 ```
 
 
